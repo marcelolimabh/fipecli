@@ -1,11 +1,12 @@
-<div>
-  <h2>FipeCLi</h2>
+<div class="container">
+  <h1>FipeCLi</h1>
 
-  <p>Consulta de Veículos da tabela FIPE</p>
+  
+    <h2>Consulta de Veículos da tabela FIPE</h2>
 
   <table>
     <thead>
-      <td>Tipo de Veiculo</td>
+      <td> Tipo de Veiculo</td>
       <td></td>
     </thead>
     <tbody>
@@ -27,50 +28,31 @@
     <option [value]="marca.id" *ngFor="let marca of marcas">{{marca.name}}</option>
 </select>
   </div>
-<hr>
+  <hr>
 
   <br>
 
   <div>
     <p>Selecione o Veiculo</p>
     <select [ngModel]="veiculoSelecionado" (ngModelChange)="onChangeVeiculo($event)" name="seletorVeiculo">
-    <option [value]="veiculo.id" *ngFor="let veiculo of veiculos">{{veiculo.name}}</option>
+     <option [value]="veiculo.id" *ngFor="let veiculo of veiculos">{{veiculo.name}}</option>
 </select>
   </div>
-<hr>
+  <hr>
 
   <br>
   <div>
     <p>Selecione o Modelo</p>
     <select [ngModel]="modeloSelecionado" (ngModelChange)="onChangeModelo($event)" name="seletorModelo">
-    <option [value]="modelo.id" *ngFor="let modelo of modelos">{{modelo.veiculo}} - {{modelo.name}}</option>
-</select>
+       <option [value]="modelo.id" *ngFor="let modelo of modelos">{{modelo.veiculo}} - {{modelo.name}}</option>
+    </select>
   </div>
 
-  <br>
-  <hr>
 
-    <div class="table-responsive" [hidden]="!isExibeResultado" >
-  <h2>Veículo Escolhido</h2>
+    <div *ngIf="isExibeResultado">
+    <resultado  [resultado]="resultado" ></resultado>
+    </div>
 
-  <table class="table">
-    <tr >
-      <th>NOME</th>
-      <th>COMBUSTIVEL</th>
-      <th>MARCA</th>
-      <th>ANO MODELO</th>
-      <th>PREÇO</th>
-      <th>DESCRIÇÃO</th>
-    </tr>
-    
-    <tr *ngIf="!isExibeResultado">
-
-     
-
-
-    </tr> 
-  </table>
-</div>
   <!--
   <pre>
 {{ this.selectedTipoVeiculo | json }}

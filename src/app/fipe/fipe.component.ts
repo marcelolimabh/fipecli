@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FipeService } from './fipe.service';
 
+
 @Component({
   selector: 'app-fipe',
   templateUrl: './fipe.component.html',
@@ -26,7 +27,33 @@ export class FipeComponent implements OnInit {
 
   constructor(service: FipeService) {
     this.service = service;
+    this.isExibeResultado = false;
+    
 
+  }
+
+  //Evento do group radio
+  onSelectionChange(tipoVeiculo) {
+
+    console.log(tipoVeiculo);
+    this.marcas = [];
+    this.veiculos =[];
+    this.modelos =[];
+    this.resultado = null;
+    this.selectedTipoVeiculo = Object.assign({}, this.selectedTipoVeiculo, tipoVeiculo);
+    if (tipoVeiculo) {
+      this.tipoVeiculo = tipoVeiculo.value;
+      this.service.obterMarcasPorTipoVeiculo(tipoVeiculo.value).subscribe(marcas => {
+
+        if (marcas) {
+          marcas.forEach(element => {
+            this.marcas.push(new Marca(element.key, element.id, element.fipe_name, element.name));
+            console.log(this.marcas.length)
+          });
+        }
+
+      });
+    }
   }
 
   //Combo Marcas
@@ -51,7 +78,7 @@ export class FipeComponent implements OnInit {
       })
   }
 
-
+  //Combo veiculos
   onChangeVeiculo(event) {
     this.veiculoSelecionado = event;
     this.modelos =[];
@@ -67,6 +94,7 @@ export class FipeComponent implements OnInit {
 
   }
 
+  //Combo Modelos
   onChangeModelo(event) {
     this.modeloSelecionado = event;
     this.resultado = null;
@@ -78,7 +106,9 @@ export class FipeComponent implements OnInit {
                                           veiculo.ano_modelo, veiculo.preco, veiculo.key, 
                                           veiculo.time, veiculo.veiculo);
        this.isExibeResultado=true;                                   
-       console.log(this.resultado);                                   
+       console.log(this.resultado);
+      
+                                     
       })
 
   }
@@ -107,29 +137,7 @@ export class FipeComponent implements OnInit {
     }
   }
 
-  onSelectionChange(tipoVeiculo) {
-    // clone the object for immutability
-
-    console.log(tipoVeiculo);
-    this.marcas = [];
-    this.veiculos =[];
-    this.modelos =[];
-    this.resultado = null;
-    this.selectedTipoVeiculo = Object.assign({}, this.selectedTipoVeiculo, tipoVeiculo);
-    if (tipoVeiculo) {
-      this.tipoVeiculo = tipoVeiculo.value;
-      this.service.obterMarcasPorTipoVeiculo(tipoVeiculo.value).subscribe(marcas => {
-
-        if (marcas) {
-          marcas.forEach(element => {
-            this.marcas.push(new Marca(element.key, element.id, element.fipe_name, element.name));
-            console.log(this.marcas.length)
-          });
-        }
-
-      });
-    }
-  }
+  
 }
 
 export class Marca {

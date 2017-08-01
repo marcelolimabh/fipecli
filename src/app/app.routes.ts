@@ -1,5 +1,6 @@
-import {RouterModule, Routes } from '@angular/router'
-import {FipeComponent} from './fipe/fipe.component'
+import {RouterModule, Routes } from '@angular/router';
+import {FipeComponent} from './fipe/fipe.component';
+
 
 
 const appRoutes: Routes = [
